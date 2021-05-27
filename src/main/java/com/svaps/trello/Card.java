@@ -1,5 +1,7 @@
 package com.svaps.trello;
 
+import java.util.Objects;
+
 /**
  * Card
  */
@@ -14,4 +16,16 @@ class Card {
         return id;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return id == card.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
