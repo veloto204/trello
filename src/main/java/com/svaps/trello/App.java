@@ -17,8 +17,22 @@ public class App {
      *                       If value is equal or greater than number of cards in the column - the card is appended to the end of list
      */
     public static void moveCard(Board board, int cardId, int sourceColumnId, int targetColumnId, int position) {
+        List<Card> cards = new ArrayList<Card>();
+        cards = App.getColumnCards(board, targetColumnId);
+        Card card =  board.getColumnById(sourceColumnId).getCardById(cardId);
 
-
+        if (cards.size() - 1 >= position) {
+            for (Card card1: cards){
+                board.getColumnById(targetColumnId).deleteCardById(card1.getId());
+            }
+            cards.add(Math.max(position, 0), card);
+            for (Card card1: cards){
+                board.getColumnById(targetColumnId).addCard(card1);
+            }
+        } else {
+            board.getColumnById(targetColumnId).addCard(card);
+        }
+        board.getColumnById(sourceColumnId).deleteCardById(cardId);
     }
 
     /**
@@ -37,7 +51,7 @@ public class App {
                 max++;
             }
         }
-        while (position <= max-1) {
+        while (position <= max - 1) {
             cards.add(board.getColumnById(columnId).getCardByPosition(position++));
         }
         return cards;
